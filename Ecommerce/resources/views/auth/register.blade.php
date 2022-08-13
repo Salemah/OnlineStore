@@ -15,12 +15,12 @@
             </div>
 {{-- email --}}
             <div class="mt-4">
-                <x-jet-label for="phone" value="{{ __('Email') }}" />
+                <x-jet-label for="phone" value="{{ __('Phone') }}" />
                 <x-jet-input id="phone" class="block mt-1 w-full" type="number" name="phone" :value="old('phone')" required />
             </div>
             {{-- Password --}}
             <div class="mt-4">
-                <x-jet-label for="address" value="{{ __('Email') }}" />
+                <x-jet-label for="address" value="{{ __('Address') }}" />
                 <x-jet-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required />
             </div>
             {{-- address --}}
