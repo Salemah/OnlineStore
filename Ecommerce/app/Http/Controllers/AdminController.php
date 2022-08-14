@@ -65,8 +65,34 @@ class AdminController extends Controller
 
     }
     public function productupdate(Request $req){
-        
-      return redirect()->back()->with('message','Product Delete  Succesfully');
+        $product = product::where('id', $req->id)->first();
+        $cff = Catagory::all();
+      return view('admin.updateproduct')
+      ->with('data',$product)
+      ->with('catagory',$cff );
+
+    }
+    public function updateproducts(Request $req){
+        $product = product::where('id', $req->id)->first();
+        $product->title = $req->title;
+        $product->description = $req->description;
+        $product->catagory = $req->catagory;
+        $product->price = $req->price;
+        $product->discountprice = $req->discountprice;
+        $product->quantity = $req->quantity;
+        $product->title = $req->title;
+
+        $image = $req->image;
+        if($image){
+            $imagename= time().'.'.$image->getClientOriginalExtension();
+        $req->image->move('product',$imagename);
+        $product->image =  $imagename;
+
+        }
+
+
+       $product->update();
+        return redirect()->back()->with('message','Product Update  Succesfully');
 
     }
 }

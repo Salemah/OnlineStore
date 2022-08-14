@@ -40,7 +40,7 @@
       <!-- end arrival section -->
 
       <!-- product section -->
-      @include('home.ourproducts')
+      @include('home.product')
 
       <!-- end product section -->
 

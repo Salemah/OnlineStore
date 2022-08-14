@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\product;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -15,12 +17,15 @@ class HomeController extends Controller
          return View('admin.home');
       }
       else{
-        return View('home.userpage');
+        $product =product::paginate(3);
+
+        return View('home.userpage')->with('product',$product);
       }
 }
    public function index(){
+    $product =product::paginate(3);
 
-         return View('home.userpage');
+         return View('home.userpage')->with('product',$product);
 
 
 }

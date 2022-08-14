@@ -22,7 +22,7 @@
         }
 
         .imagesixe{
-            width: 60px;
+            width: 350px;
         }
         .tablehead{
             background-color: rgb(107, 127, 107);
@@ -37,7 +37,8 @@
             text-align: center;
         }
         tbody tr td{
-            padding: 0px 12px
+
+            padding: 17px;
         }
     </style>
   </head>
@@ -82,16 +83,16 @@
 
 
                       <tr>
-                        <th >{{$p->title}}</th>
+                        <td >{{$p->title}}</td>
                         <td>{{$p->description}}</td>
                         <td>{{$p->price}}</td>
                         <td>{{$p->discountprice}}</td>
                         <td>{{$p->quantity}}</td>
                         <td><img class="imagesixe" src="product/{{$p->image}}" alt=""> </td>
                         <td>{{$p->catagory}}</td>
-                        <td><a class="btn btn-primary" onclick="return confirm('are you sure delete products')"  href="{{url('product/delete',$p->id)}}">Delete</a></td>
+                        <td><a class="btn btn-danger" onclick="return confirm('are you sure delete products')"  href="{{url('product/delete',$p->id)}}">Delete</a></td>
                             <td>
-                            <a class="btn btn-primary" href="{{url('product/update',$p->id)}}">Update</a>
+                            <a class="btn btn-success" href="{{url('product/update',$p->id)}}">Update</a>
                         </td>
                       </tr>
                       @endforeach
