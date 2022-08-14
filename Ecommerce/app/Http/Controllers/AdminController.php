@@ -32,6 +32,7 @@ class AdminController extends Controller
         return  view('admin.product')->with('data',$data);
 
     }
+
     public function addproducts(Request $req){
         $product = new product();
         $product->title = $req->title;
@@ -49,6 +50,23 @@ class AdminController extends Controller
 
        $product->save();
         return redirect()->back()->with('message','Product Add  Succesfully');
+
+    }
+    public function showproduct(Request $req){
+
+        $product = product::all();
+        return  view('admin.showproduct')->with('product',$product);
+
+    }
+    public function productdelete(Request $req){
+        $product = product::where('id', $req->id)->first();
+        $product->delete();
+      return redirect()->back()->with('message','Product Delete  Succesfully');
+
+    }
+    public function productupdate(Request $req){
+        
+      return redirect()->back()->with('message','Product Delete  Succesfully');
 
     }
 }
