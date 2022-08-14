@@ -15,7 +15,7 @@ class HomeController extends Controller
          return View('admin.home');
       }
       else{
-        return View('dashboard');
+        return View('home.userpage');
       }
 }
    public function index(){
