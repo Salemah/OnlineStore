@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catagory;
+use App\Models\Order;
 use App\Models\product;
 use Illuminate\Http\Request;
 
@@ -93,6 +94,12 @@ class AdminController extends Controller
 
        $product->update();
         return redirect()->back()->with('message','Product Update  Succesfully');
+
+    }
+    public function vieworder(Request $req){
+
+        $order = Order::all();
+        return  view('admin.vieworder')->with('order',$order);
 
     }
 }

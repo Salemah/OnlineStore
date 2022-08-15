@@ -94,7 +94,7 @@
             <div class="order">
                 <h1 style="font-size: 25px">Proced on order</h1>
                 <a href="{{ url('cashondeliovery') }}" class="btn btn-danger">Cash On delivery</a>
-                <a href=""class="btn btn-danger">Online Payment</a>
+                <a href="{{ url('stripe',$totalprice)}}"class="btn btn-danger">Online Payment</a>
             </div>
         </div>
 

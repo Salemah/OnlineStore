@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Session;
+use Stripe;
 
 class HomeController extends Controller
 {
@@ -114,4 +116,48 @@ class HomeController extends Controller
       return redirect()->back()->with('message','We Recive Your Order');
 
     }
+    public function stripepayment($totalprice){
+        return view('home.stripepayment')->with('totalprice',$totalprice);
+
+    }
+    public function stripePost(Request $request)
+    {
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        Stripe\Charge::create ([
+                "amount" => $request->totalprice *100,
+                "currency" => "usd",
+                "source" => $request->stripeToken,
+                "description" => "Test payment Tology.com"
+        ]);
+        $user =Auth::user();
+      $userid=$user->id;
+      $data = Cart::where('user_id',$userid)->get();
+      foreach($data as $data){
+        $order = new Order();
+        $order->name = $data->name;
+        $order->email = $data->email;
+        $order->phone = $data->phone;
+        $order->address = $data->address;
+        $order->producttitle = $data->producttitle;
+        $order->price = $data->price;
+        $order->quantity = $data->quantity;
+        $order->product_id = $data->product_id;
+        $order->user_id = $data->user_id;
+        $order->image = $data->image;
+        $order->paymentstatus ="Stripe Payment Done";
+        $order->deliverystatus = "processing";
+        $order->save();
+        //delte cart item after order submit
+        $cartid=$data->id;
+        $cartitem= Cart::find($cartid);
+        $cartitem->delete();
+
+      }
+
+        Session::flash('success', 'Payment successful!');
+
+        return redirect()->back()->with('message','We Recive Your Order');
+    }
+
 }
