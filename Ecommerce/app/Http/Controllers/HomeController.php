@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Session;
 use Stripe;
 
+
 class HomeController extends Controller
 {
     //
@@ -19,7 +20,25 @@ class HomeController extends Controller
     {
         $usertype = Auth::user()->usertype;
         if ($usertype == '1') {
-            return View('admin.home');
+            $totalproduct= product::all()->count();
+            $totalcustomer= User::where('usertype',"0")->count();
+            $totalorder= Order::all()->count();
+            $orderdelivered= Order::where('deliverystatus',"Complete")->count();
+            $orderprocessing= Order::where('deliverystatus',"processing")->count();
+            $orderrev= Order::all();
+            $totalrevenue=0;
+            foreach($orderrev as $orderrevenue){
+                $totalrevenue = $orderrevenue->price+ $totalrevenue;
+            }
+
+            return View('admin.home')
+            ->with('totalproduct',$totalproduct)
+            ->with('totalorder',$totalorder)
+            ->with('orderdelivered', $orderdelivered)
+            ->with('totalcustomer', $totalcustomer)
+            ->with('totalrevenuie', $totalrevenue)
+
+            ->with('orderprocessing', $orderprocessing);
         } else {
             $product = product::paginate(3);
 

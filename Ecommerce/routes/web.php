@@ -42,6 +42,7 @@ Route::get('/delivered/{id}',[AdminController::class, 'delivered']);
 Route::get('/printpdf/{id}',[AdminController::class, 'pdfview']);
 Route::get('/sendemail/{id}',[AdminController::class, 'sendemail']);
 Route::post('/senduseremail/{id}',[AdminController::class, 'senduseremail']);
+Route::get('/search',[AdminController::class, 'search']);
 //
 //user route
 Route::get('/productdetails/{id}',[HomeController::class, 'productdetails']);

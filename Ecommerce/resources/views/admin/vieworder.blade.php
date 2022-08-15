@@ -25,7 +25,7 @@
         }
         .tble {
 
-            width: 70%;
+            width: 100%;
             overflow: inherit;
             border: 1px solid white;
 
@@ -69,6 +69,13 @@
             <div class="content-wrapper">
                 <div class="vieworder">
                     <h6 class="htag">All Order</h6>
+                    <div class="" style="padding-left:400px;padding-bottom:30px">
+
+                        <form action="{{url('search')}}" method="GET">
+                            <input type="text" style="color: Black" name="search" placeholder="Search">
+                            <input type="submit" value="Search" class="btn btn-outline-primary" id="">
+                        </form>
+                    </div>
 
                     <table  class="tble" >
 
@@ -90,7 +97,9 @@
                             </tr>
 
 
-                            @foreach ($order as $order)
+                            @forelse ($order as $order)
+
+
                                 <tr>
                                     <?php
                                     $count =0;
@@ -122,7 +131,12 @@
                                     <td><a href="{{url('printpdf',$order->id)}}" class="btn btn-success">Print Pdf</a></td>
                                     <td><a href="{{url('sendemail',$order->id)}}" class="btn btn-info">SendEmail</a></td>
                                 </tr>
-                            @endforeach
+                                @empty
+                                <tr>
+                                    <td style="margin:auto;font-size:20px;color:red;font-weight:bold; margin-bottom:15px ">No Data Found</td>
+                                </tr>
+
+                                @endforelse
 
 
                     </table>

@@ -153,4 +153,14 @@ class AdminController extends Controller
 
         return view('admin.emailinfo')->with('order',$order );
     }
+    public function search(Request $req){
+        $searchtext =$req->search;
+        $order = Order::where('name', 'LIKE',"%$searchtext%")
+        ->orwhere('email', 'LIKE',"%$searchtext%")
+        ->orwhere('phone', 'LIKE',"%$searchtext%")
+        ->orwhere('address', 'LIKE',"%$searchtext%")
+        ->orwhere('producttitle', 'LIKE',"%$searchtext%")
+        ->orwhere('product_id', 'LIKE',"%$searchtext%")->get();
+        return  view('admin.vieworder')->with('order', $order);
+    }
 }
