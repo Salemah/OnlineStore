@@ -37,7 +37,9 @@ Route::post('/add_products',[AdminController::class, 'addproducts']);
 Route::get('/product/delete/{id}',[AdminController::class, 'productdelete']);
 Route::get('/product/update/{id}',[AdminController::class, 'productupdate']);
 Route::post('update_products/{id}',[AdminController::class, 'updateproducts']);
-Route::get('order',[AdminController::class, 'vieworder']);
+Route::get('/order',[AdminController::class, 'vieworder']);
+Route::get('/delivered/{id}',[AdminController::class, 'delivered']);
+Route::get('/printpdf/{id}',[AdminController::class, 'pdfview']);
 //
 //user route
 Route::get('/productdetails/{id}',[HomeController::class, 'productdetails']);

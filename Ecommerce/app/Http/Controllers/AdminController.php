@@ -6,6 +6,7 @@ use App\Models\Catagory;
 use App\Models\Order;
 use App\Models\product;
 use Illuminate\Http\Request;
+use PDF;
 
 class AdminController extends Controller
 {
@@ -100,6 +101,27 @@ class AdminController extends Controller
 
         $order = Order::all();
         return  view('admin.vieworder')->with('order',$order);
+
+    }
+    public function delivered(Request $req){
+
+        $order = Order::where('id', $req->id)->first();
+
+        $order->deliverystatus = "Complete";
+        $order->paymentstatus = "Paid";
+        $order->update();
+        return  redirect()->back()->with('message','order status update  Succesfully');
+
+    }
+    public function pdfview($id){
+
+        $order = Order::find($id);
+       $pdf = PDF::loadView('admin.pdf',compact('order'));
+        return $pdf->download('OrderDetails.pdf');
+        //return view('admin.test')->with('order',$orders);
+
+
+
 
     }
 }
