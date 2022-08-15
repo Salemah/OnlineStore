@@ -10,13 +10,26 @@
             font-size: 25px;
             font-weight: bold;
             padding: 10px 0;
+            color: red;
         }
 
         .vieworder {
 
-            width: 60%;
-            padding-top: 40px;
-            margin: auto;
+            width: 100%;
+            overflow-y:hidden;
+            border: 1px solid white;
+            border-collapse:collapse;
+            padding-right: 5px;
+
+
+        }
+        .tble {
+
+            width: 70%;
+            overflow: inherit;
+            border: 1px solid white;
+
+
 
 
         }
@@ -34,7 +47,7 @@
         #thname {
             text-align: center;
             color: rgb(255, 255, 255);
-            padding: 10px;
+
         }
 
         .table-data {
@@ -54,13 +67,13 @@
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
-                <div class="">
+                <div class="vieworder">
                     <h6 class="htag">All Order</h6>
 
-                    <table class="vieworder table-bordered ">
-                        <thead>
+                    <table  class="tble" >
+
                             <tr id="sds">
-                                <th id="thname">index</th>
+
                                 <th id="thname">Name</th>
                                 <th id="thname">Email</th>
                                 <th id="thname">Phone</th>
@@ -73,16 +86,17 @@
                                 <th id="thname" style="width:150px">Image</th>
                                 <th id="thname" >Delivered</th>
                                 <th id="thname" >Print Pdf</th>
+                                <th id="thname" >Send Email</th>
                             </tr>
-                        </thead>
-                        <tbody>
+
+
                             @foreach ($order as $order)
                                 <tr>
                                     <?php
                                     $count =0;
                                 $count =$count+1
                                 ?>
-                                    <td class="table-data">{{ $count }}</td>
+
                                     <td class="table-data">{{ $order->name }}</td>
                                     <td class="table-data">{{ $order->email }}</td>
                                     <td class="table-data">{{ $order->phone }}</td>
@@ -106,6 +120,7 @@
 
                                     @endif</td>
                                     <td><a href="{{url('printpdf',$order->id)}}" class="btn btn-success">Print Pdf</a></td>
+                                    <td><a href="{{url('sendemail',$order->id)}}" class="btn btn-info">SendEmail</a></td>
                                 </tr>
                             @endforeach
 
