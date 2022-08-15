@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\product;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
@@ -60,10 +61,57 @@ class HomeController extends Controller
        $cart->quantity= $req->quantity;
        $cart->product_id= $product->id;
        $cart->save();
-       return redirect()->back();
+       return redirect()->back()->with('message','Product Delete  Succesfully');;
         }
         else{
             return redirect('login');
         }
+    }
+    public function showcart(){
+        if(Auth::id()){
+            $id= Auth::user()->id;
+            $cart = Cart::where('user_id',$id)->get();
+            return view('home.showcart')->with('cart',$cart);
+        }
+        return redirect('login');
+
+    }
+    public function removecart(Request $req){
+        if(Auth::id()){
+
+            $cart = Cart::where('id',$req->id)->first();
+            $cart->delete();
+            return redirect()->back();
+        }
+        return redirect('login');
+
+    }
+    public function cashondeliovery(Request $req){
+      $user =Auth::user();
+      $userid=$user->id;
+      $data = Cart::where('user_id',$userid)->get();
+      foreach($data as $data){
+        $order = new Order();
+        $order->name = $data->name;
+        $order->email = $data->email;
+        $order->phone = $data->phone;
+        $order->address = $data->address;
+        $order->producttitle = $data->producttitle;
+        $order->price = $data->price;
+        $order->quantity = $data->quantity;
+        $order->product_id = $data->product_id;
+        $order->user_id = $data->user_id;
+        $order->image = $data->image;
+        $order->paymentstatus ="Cash on delivery";
+        $order->deliverystatus = "processing";
+        $order->save();
+        //delte cart item after order submit
+        $cartid=$data->id;
+        $cartitem= Cart::find($cartid);
+        $cartitem->delete();
+
+      }
+      return redirect()->back()->with('message','We Recive Your Order');
+
     }
 }

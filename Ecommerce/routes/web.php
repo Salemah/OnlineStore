@@ -40,4 +40,7 @@ Route::post('update_products/{id}',[AdminController::class, 'updateproducts']);
 //
 //user route
 Route::get('/productdetails/{id}',[HomeController::class, 'productdetails']);
+Route::get('/showcart',[HomeController::class, 'showcart']);
 Route::post('/addcart/{id}',[HomeController::class, 'addTocart']);
+Route::get('/removecart/{id}',[HomeController::class, 'removecart']);
+Route::get('/cashondeliovery',[HomeController::class, 'cashondeliovery']);
