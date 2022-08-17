@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-    <base  href="/public">
+
       <!-- Basic -->
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,13 +14,13 @@
       <link rel="shortcut icon" href="images/favicon.png" type="">
       <title>Famms - Fashion HTML Template</title>
       <!-- bootstrap core css -->
-      <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
+      <link rel="stylesheet" type="text/css" href="{{asset('home/css/bootstrap.css')}}" />
       <!-- font awesome style -->
-      <link href="home/css/font-awesome.min.css" rel="stylesheet" />
+      <link href="{{asset('home/css/font-awesome.min.css')}}" rel="stylesheet" />
       <!-- Custom styles for this template -->
-      <link href="home/css/style.css" rel="stylesheet" />
+      <link href="{{asset('home/css/style.css')}}" rel="stylesheet" />
       <!-- responsive style -->
-      <link href="home/css/responsive.css" rel="stylesheet" />
+      <link href="{{asset('home/css/responsive.css')}}" rel="stylesheet" />
    </head>
    <body>
       <div class="hero_area">
@@ -32,18 +32,9 @@
 
       <div class="col-sm-6 col-md-4 col-lg-4" style="margin: auto;padding:30px;width:50%">
         <div class="box">
-           {{-- <div class="option_container">
-              <div class="options">
-                 <a href="{{url('productdetails',$product->id)}}" class="option1">
-               Product Details
-                 </a>
-                 <a href="" class="option2">
-                 Buy Now
-                 </a>
-              </div>
-           </div> --}}
+
            <div class="img-box">
-              <img style="width: 200px" src="product/{{$product->image}}" alt="">
+              <img style="width: 200px" src="/product/{{$product->image}}" alt="">
            </div>
            <div class="detail-box">
               <h5>
@@ -88,7 +79,7 @@
            </div>
         </div>
      </div>
-      
+
       @include('home.footer')
 
       <!-- footer end -->

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use RealRashid\SweetAlert\Facades\Alert;
 
 use App\Models\Cart;
 use App\Models\Order;
@@ -9,6 +10,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 use Session;
 use Stripe;
 
@@ -61,8 +63,29 @@ class HomeController extends Controller
     {
         if(Auth::id()){
         $user =Auth::user();
+        $userid=$user->id;
        $product = product::find($id);
-       $cart = new Cart();
+       $product_exist_id = Cart::where('product_id',$product->id)
+       ->where('user_id', $userid)->get('id')->first();
+       if($product_exist_id){
+        $cart = Cart::find($product_exist_id)->first();
+        $quantity=  $cart->quantity;
+        $cart->quantity=$quantity+$req->quantity;
+        if($product->discountprice){
+            $cart->price= $product->discountprice * $cart->quantity;
+           }
+            else{
+                $cart->price= $product->price * $cart->quantity;
+           }
+        $cart->save();
+        Alert::success('Success', 'Product added  Succesfully');
+
+
+       return redirect()->back()->with('message','Product added  Succesfully');
+
+       }
+       else{
+        $cart = new Cart();
        $cart->name= $user->name;
        $cart->email= $user->email;
        $cart->phone= $user->phone;
@@ -82,7 +105,10 @@ class HomeController extends Controller
        $cart->quantity= $req->quantity;
        $cart->product_id= $product->id;
        $cart->save();
-       return redirect()->back()->with('message','Product Delete  Succesfully');;
+       return redirect()->back()->with('message','Product added  Succesfully');;
+
+       }
+
         }
         else{
             return redirect('login');
@@ -193,6 +219,13 @@ class HomeController extends Controller
             $order->save();
 
         return redirect()->back();
+
+    }
+    public function allproducts(){
+        $product = product::paginate(3);
+
+
+        return view('home.allproduct')->with('product',$product);
 
     }
 

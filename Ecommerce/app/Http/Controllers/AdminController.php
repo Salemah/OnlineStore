@@ -9,39 +9,51 @@ use Illuminate\Http\Request;
 use Notification;
 use PDF;
 use App\Notifications\MyNotification;
-
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     //
     public function viewcatagory()
     {
+        if(Auth::id() ){
         $data = Catagory::all();
         return view('admin.catagory')->with('data', $data);
+        }
+        return redirect('login');
+
     }
     public function addcatagory(Request $req)
     {
+        if(Auth::id() ){
         $data = new Catagory();
         $data->catagory_name = $req->catagory;
         $data->save();
         return redirect()->back()->with('message', 'Catagory Added Succesfully');
     }
+    return redirect('login');
+    }
     public function deletecatagory(Request $req)
     {
-
+        if(Auth::id() ){
         $data = Catagory::where('id', $req->id)->first();
         $data->delete();
         return redirect()->back()->with('message', 'Catagory Delete Succesfully');
     }
+    return redirect('login');
+    }
     public function viewproduct(Request $req)
     {
-
+        if(Auth::id() ){
         $data = Catagory::all();
         return  view('admin.product')->with('data', $data);
+    }
+    return redirect('login');
     }
 
     public function addproducts(Request $req)
     {
+        if(Auth::id() ){
         $product = new product();
         $product->title = $req->title;
         $product->description = $req->description;
@@ -58,26 +70,34 @@ class AdminController extends Controller
 
         $product->save();
         return redirect()->back()->with('message', 'Product Add  Succesfully');
+        return redirect('login');
+    }
     }
     public function showproduct(Request $req)
     {
-
+        if(Auth::id() ){
         $product = product::all();
         return  view('admin.showproduct')->with('product', $product);
+        return redirect('login');
+    }
     }
     public function productdelete(Request $req)
     {
+
         $product = product::where('id', $req->id)->first();
         $product->delete();
         return redirect()->back()->with('message', 'Product Delete  Succesfully');
     }
     public function productupdate(Request $req)
     {
+        if(Auth::id() ){
         $product = product::where('id', $req->id)->first();
         $cff = Catagory::all();
         return view('admin.updateproduct')
             ->with('data', $product)
             ->with('catagory', $cff);
+            return redirect('login');
+    }
     }
     public function updateproducts(Request $req)
     {

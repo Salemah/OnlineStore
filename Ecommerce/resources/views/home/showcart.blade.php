@@ -14,13 +14,14 @@
     <link rel="shortcut icon" href="images/favicon.png" type="">
     <title>Famms - Fashion HTML Template</title>
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="home/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="{{asset('home/css/bootstrap.css')}}" />
     <!-- font awesome style -->
-    <link href="home/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="{{asset('home/css/font-awesome.min.css')}}" rel="stylesheet" />
     <!-- Custom styles for this template -->
-    <link href="home/css/style.css" rel="stylesheet" />
+    <link href="{{asset('home/css/style.css')}}" rel="stylesheet" />
     <!-- responsive style -->
-    <link href="home/css/responsive.css" rel="stylesheet" />
+    <link href="{{asset('home/css/responsive.css')}}" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style type="text/css">
         .center {
             margin: auto;
@@ -47,6 +48,8 @@
 </head>
 
 <body>
+
+
     <div class="hero_area">
         @include('home.header')
 
@@ -79,7 +82,7 @@
                             <td class="table-data">${{ $crt->price }}</td>
                             <td class="table-data"><img style="width: 100px; height:100px"
                                     src="/product/{{ $crt->image }}" alt=""></td>
-                            <td class="table-data"><a onclick="return confirm('are you sure to remove from cart?')"
+                            <td class="table-data"><a onclick="confirmation(event)"
                                     href="{{ url('removecart', $crt->id) }}" class="btn btn-danger"> Remove Cart</a></td>
                         </tr>
                         <?php $totalprice = $totalprice + $crt->price; ?>
@@ -114,7 +117,33 @@
             </p>
         </div>
 
+        <script>
+            function confirmation(ev) {
+              ev.preventDefault();
+              var urlToRedirect = ev.currentTarget.getAttribute('href');
+              console.log(urlToRedirect);
+              swal({
+                  title: "Are you sure to cancel this product",
+                  text: "You will not be able to revert this!",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+              })
+              .then((willCancel) => {
+                  if (willCancel) {
 
+
+
+                      window.location.href = urlToRedirect;
+
+                  }
+
+
+              });
+
+
+          }
+      </script>
         <!-- jQery -->
         <script src="home/js/jquery-3.4.1.min.js"></script>
         <!-- popper js -->
