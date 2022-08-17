@@ -178,5 +178,22 @@ class HomeController extends Controller
 
         return redirect()->back()->with('message','We Recive Your Order');
     }
+    public function showorder(){
+
+        if(Auth::id()){
+            $id= Auth::user()->id;
+            $order= Order::where('user_id',$id)->get();
+            return view('home.showOrder')->with('order',$order);
+        }
+        return redirect('login');
+    }
+    public function cancelorder($id){
+            $order =Order::find($id);
+            $order->deliverystatus="You Cancel This Order";
+            $order->save();
+
+        return redirect()->back();
+
+    }
 
 }

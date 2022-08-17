@@ -52,3 +52,5 @@ Route::get('/removecart/{id}',[HomeController::class, 'removecart']);
 Route::get('/cashondeliovery',[HomeController::class, 'cashondeliovery']);
 Route::get('/stripe/{totalprice}',[HomeController::class, 'stripepayment']);
 Route::post('stripe/{totalprice}',[HomeController::class, 'stripePost'])->name('stripe.post');
+Route::get('/showorder',[HomeController::class, 'showorder']);
+Route::get('/cancelorder/{id}',[HomeController::class, 'cancelorder']);
